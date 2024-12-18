@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 400px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        #display {
+            height: 80px;
+            background: #222;
+            color: #fff;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: #ccc;
+        }
+        button {
+            background: #fff;
+            font-size: 1.5rem;
+            border: none;
+            padding: 20px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button:hover {
+            background: #f4f4f4;
+        }
+        button:active {
+            transform: scale(0.95);
+            transition: transform 0.1s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="display"></div>
+        <div class="buttons">
+            <button onclick="toDisplay('7');">7</button>
+            <button onclick="toDisplay('8');">8</button>
+            <button onclick="toDisplay('9');">9</button>
+            <button onclick="toDisplay('/');">/</button>
+            <button onclick="toDisplay('4');">4</button>
+            <button onclick="toDisplay('5');">5</button>
+            <button onclick="toDisplay('6');">6</button>
+            <button onclick="toDisplay('*');">*</button>
+            <button onclick="toDisplay('1');">1</button>
+            <button onclick="toDisplay('2');">2</button>
+            <button onclick="toDisplay('3');">3</button>
+            <button onclick="toDisplay('-');">-</button>
+            <button onclick="toDisplay('0');">0</button>
+            <button onclick="toDisplay('.');">.</button>
+            <button onclick="toDisplay('+');">+</button>
+            <button onclick="calculate();">=</button>
+            <button onclick="toClear();">Clear</button>
+            <button onclick="toDisplay('^');">x<sup>y</sup></button>
+            <button onclick="toDisplay('sq');">Square</button>
+            <button onclick="toDisplay('sqrt');">Sqrt</button>
+        </div>
+    </div>
+    <script>
+        let displayCalc = document.getElementById('display');
+        let initVal = '';
+
+        function toDisplay(val) {          
+            initVal += val;
+            displayCalc.innerHTML = initVal;
+            // console.log(displayCalc.innerHTML);
+        }
+
+        function calculate() {
+            let [n1, op, n2] = initVal.split(/([+\-*/^]|sqrt|sq)/);
+            let res;
+            n1 = Number(n1); n2 = Number(n2);
+            
+            switch (op) {
+                case '+':
+                    res = n1 + n2;
+                    break;
+                case '-':
+                    res = n1 - n2;
+                    break;
+                case '*':
+                    res = n1 * n2;
+                    break;
+                case '/':
+                    res = n2 !== 0 ? n1 / n2 : 'Error'; 
+                    break;
+                case '^':
+                    res = n1 ** n2;
+                    break;  
+                case 'sqrt':
+                    res = Math.sqrt(n1);
+                    break;
+                case 'sq':                   
+                    res = n1 ** 2;                   
+                    break;
+                default:
+                    res = 'Invalid';
+            }
+            initVal = res.toString(); 
+            displayCalc.innerHTML = initVal; 
+        }
+        function toClear() {
+            initVal = '';
+            displayCalc.innerHTML = '';
+        }
+    </script>
+</body>
+</html> 
